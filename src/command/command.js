@@ -3,11 +3,11 @@ import {
   contakSave,
   deleteChontak,
   getAllData,
+  getOneData,
   getUser,
   userSave,
 } from "../utils/user.js";
 import { addOn } from "../action/on.js";
-
 
 export const start = async (ctx) => {
   const user = await getUser(ctx.update.message.from.id);
@@ -51,8 +51,15 @@ export const deletee = async (ctx) => {
   });
 };
 
+export const getAll = async (ctx) => {
+  const keyboard = await getAllData(String(ctx.update.message.from.id));
+  await ctx.reply(`Barcha Malumotlar`, {
+    parse_mode: "HTML",
+    reply_markup: { inline_keyboard: keyboard },
+  });
+};
+
 export const callback_query = async (ctx) => {
-    console.log(ctx.callbackQuery)
   let callbackData = ctx.callbackQuery.data;
   if (callbackData === "confirm" && process.myKey.key) {
     await ctx.editMessageText(`Ma'lumot muvaffaqiyatli qo'shildi! 🥳`, {
@@ -62,7 +69,7 @@ export const callback_query = async (ctx) => {
       },
     });
     contakSave(process.myKey);
-    process.myKey = {}
+    process.myKey = {};
   } else if (callbackData === "edit") {
     await ctx.editMessageText(
       `Qaytadan boshlaymizmi? 
@@ -77,15 +84,21 @@ Istagan ma'lumot turini menga jo'nating 🙂...`,
         },
       }
     );
-    process.myKey = {}
+    process.myKey = {};
+  } else if (ctx.callbackQuery.message.text === "Barcha Malumotlar") {
+    const data = await getOneData(callbackData);
+    await ctx.reply(`Kalit so'z : ${data.key}
+
+Tekst : ${data.value} `);
   } else {
     await deleteChontak(callbackData);
-    console.log(callbackData);
     await ctx.reply(`O'chirish muvaffaqiyatli amalga oshdi! 
       
       Ma'lumot qo'shish uchun : /add 
       
       Ma'lumot o'chirish uchun : /delete 
+
+      Malumotlarni korish : /getAll
       
        Yordam olish uchun : /help`);
   }

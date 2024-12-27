@@ -24,6 +24,7 @@ export const getAllData = async (id) => {
   ]);
 };
 
+
 export const getOneData = async (id) => {
   return Chontak.findOne({ _id: id })
   };
