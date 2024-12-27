@@ -40,7 +40,8 @@ export const help = async (ctx) => {
 /start - Botni qayta ishga tushirish
 /help - Yordam
 /add - Yangi ma'lumot qo'shish
-/delete - Ma'lumot o'chirish`);
+/delete - Ma'lumot o'chirish
+/getall - Ma'lumot korsih`);
 };
 
 export const deletee = async (ctx) => {
@@ -98,7 +99,7 @@ Tekst : ${data.value} `);
       
       Ma'lumot o'chirish uchun : /delete 
 
-      Malumotlarni korish : /getAll
+      Malumotlarni korish : /getall
       
        Yordam olish uchun : /help`);
   }
