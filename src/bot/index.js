@@ -8,7 +8,10 @@ import {
 } from "../command/command.js";
 import { addOn } from "../action/on.js";
 import { addHears } from "../action/hears.js";
+import { config } from "dotenv";
+config()
 process.myKey = {};
+
 export const bot = new Bot(process.env.BOT_TOKEN);
 const commands = [
   { command: "start", description: "Botni ishga tushirish" },

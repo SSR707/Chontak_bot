@@ -1,5 +1,7 @@
 import { bot } from "./src/bot/index.js";
 import { connectMongodb } from "./src/config/index.js";
+import { config } from "dotenv";
+config()
 import express from "express";
 
 const app = express();
